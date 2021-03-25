@@ -1,5 +1,4 @@
-require('dotenv').config();
-const PORT = process.env.PORT || 3000;
+const config = require('./config.json');
 const fs = require('fs');
 //Extract the client class from discord.js
 const PREFIX = '$';
@@ -53,4 +52,4 @@ client.on('message', (message) => {
   }
 })
 
-client.login(process.env.DISCORDJS_BOT_TOKEN);
+client.login(config.token);
