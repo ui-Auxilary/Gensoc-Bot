@@ -20,8 +20,10 @@ client.on('ready', () => {
 
 client.on('guildMemberAdd', (member) => {
     console.log('User ' + member.user.username + ' has joined the server!');
-    // defaultRole = member.guild.roles.cache.find(role => role.name === "unverified");
-    // member.roles.add(defaultRole);
+    setTimeout(function(){
+      defaultRole = member.guild.roles.cache.find(role => role.name === "Traveller");
+      member.roles.add(defaultRole);
+    }, 1*60*1000);
     client.commands.get('verify').execute(MessageEmbed, client);
 });
 
