@@ -1,11 +1,4 @@
-const host = '0.0.0.0';
-const port = process.env.PORT || 3000;
-
-app.listen(port, host, function() {
-  console.log("Server started.......");
-});
-
-const config = require('./config.json');
+// const config = require('./config.json');
 const fs = require('fs');
 //Extract the client class from discord.js
 const PREFIX = '$';
@@ -59,4 +52,4 @@ client.on('message', (message) => {
   }
 })
 
-client.login(config.token);
+client.login(process.env.DJS_TOKEN);
