@@ -19,8 +19,10 @@ module.exports = {
         if (!reaction.message.guild) return;
         if (reaction.message.channel.id == channelID) {
           if (reaction.emoji.name === '✅' && !user.bot) {
-            await reaction.message.guild.members.cache.get(user.id).roles.add(testRole);
-            await reaction.message.guild.members.cache.get(user.id).send("Welcome");
+            await reaction.message.guild.members.cache.get(user.id).send("Hello there ~ ! 😊💛, please do us a favour and fill out the form here: https://forms.gle/JvB68fChAEBdwDor9");
+            setTimeout(function(){
+              reaction.message.guild.members.cache.get(user.id).roles.add(testRole);
+            }, 3*60*1000);
           } else {
             return;
           }
