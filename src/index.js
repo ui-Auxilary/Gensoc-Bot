@@ -15,20 +15,49 @@ for (const file of commandFiles) {
 // Bot methods
 
 client.on('ready', () => {
-  console.log(`${client.user.username} has logged in...`)
+  console.log(`${client.user.username} has logged in...`);
 });
 
 client.on('guildMemberAdd', (member) => {
     console.log('User ' + member.user.username + ' has joined the server!');
-    setTimeout(function(){
-      defaultRole = member.guild.roles.cache.find(role => role.name === "Traveller");
-      member.roles.add(defaultRole);
-    }, 1*60*1000);
-    client.commands.get('verify').execute(MessageEmbed, client);
+    defaultRole = member.guild.roles.cache.find(role => role.name === "Traveller");
+    member.roles.add(defaultRole);
 });
 
 client.on('message', (message) => {
-  if (message.author.bot) return;
+  if (message.channel.id == 822423063697948693) {
+    console.log(message.guild.id);
+    verified_role = message.guild.roles.cache.find(role => role.name === "verified");
+    console.log(verified_role);
+    let embed = message.embeds[0], field, text, number;
+    if (!embed) return;
+    console.log(embed);
+
+    //Extracts DISCORD_ID from the google form
+    const discord_name = embed.description.split("\n").pop();
+
+    member = message.guild.members.cache.find(v => v.user.tag == discord_name);
+    console.log(member.user.id);
+    member.roles.add(verified_role);
+
+
+
+    // for (embed.description) {
+    //   console.log(f);
+    //   if (f.name == "**What is your Discord ID? (e.g JohnSmith#1234)**\n") {
+    //     field = f;
+    //     console.log(field);
+    //     break;
+    //   }
+    // }
+    // if (!field) {
+    //   return;
+    // }
+    //
+    // text = field.value;
+    // console.log(text);
+  }
+  if (message.author.bot && message.channel.id != 822423063697948693) return;
   if (message.content.startsWith(PREFIX)) {
     const [CMD_NAME, ...args] = message.content.trim().substring(PREFIX.length).split(/\s+/);
     console.log(CMD_NAME);
