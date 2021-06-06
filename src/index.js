@@ -16,6 +16,7 @@ for (const file of commandFiles) {
 
 client.on('ready', () => {
   console.log(`${client.user.username} has logged in...`);
+  console.log('New Edition');
 });
 
 client.on('guildMemberAdd', (member) => {
