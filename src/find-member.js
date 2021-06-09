@@ -6,7 +6,7 @@ module.exports = client => {
   client.on('guildMemberAdd', async (member) => {
     console.log("Activating");
     console.log('User ' + member.user.username + ' has joined the server!');
-    defaultRole = member.guild.roles.cache.find(role => role.name === "verified");
+    defaultRole = member.guild.roles.cache.find(role => role.name === "Traveller");
     console.log(member.user.id);
     const result = await memberDataSchema.find({
       _id: member.user.id
