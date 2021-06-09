@@ -5,7 +5,7 @@ module.exports = client => {
   client.on('message', async (message) => {
     const { author } = message;
     const { id } = author;
-    member = message.guild.members.cache.find(v => v.user.tag == discord_name);
+
     if (message.channel.id == 822423063697948693) {
       verified_role = message.guild.roles.cache.find(role => role.name === "Traveller");
       // console.log(verified_role);
@@ -39,7 +39,6 @@ module.exports = client => {
       member = message.guild.members.cache.find(v => v.user.tag == d_id);
       console.log(member.user.id);
       member.roles.add(verified_role);
-    }
 
     await memberDataSchema.findOneAndUpdate(
         {
@@ -57,5 +56,6 @@ module.exports = client => {
           upsert: true,
         }
       ).exec()
+    }
   });
 }
