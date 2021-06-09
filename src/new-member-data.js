@@ -2,11 +2,11 @@ const mongo = require('./mongo.js');
 const memberDataSchema = require('./schemas/new-member-schema.js');
 
 module.exports = client => {
-  client.on('message', async (message) => {
+  client.on('message', (message) => {
     const { author } = message;
     const { id } = author;
     if (message.channel.id == 822423063697948693) {
-      verified_role = message.guild.roles.cache.find(role => role.name === "Traveller");
+      verified_role = message.guild.roles.cache.find(role => role.name === "verified");
       // console.log(verified_role);
       let embed = message.embeds[0], field, text, number;
       if (!embed) return;
@@ -37,15 +37,21 @@ module.exports = client => {
       //Extracts DISCORD_ID from the google form
       const discord_name = embed.description.split("\n").pop();
 
-      member = message.guild.members.cache.find(v => v.user.tag == discord_name);
+      member = message.guild.members.cache.find(v => v.user.tag == d_id);
       console.log(member.user.id);
-      member.roles.add(verified_role);
-
+      const result = memberDataSchema.find({
+        _id: member.user.id
+      })
+      if (result) {
+        member.roles.add(verified_role);
+      } else {
+        return;
+      }
     }
 
-    await memberDataSchema.findOneAndUpdate(
+    memberDataSchema.findOneAndUpdate(
         {
-          _id:member.user.id,
+          _id: member.user.id,
         },
         {
           _id: member.user.id,

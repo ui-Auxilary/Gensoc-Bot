@@ -10,6 +10,7 @@ client.commands = new Collection();
 // DB Functions imports
 const messageCount = require('./message-counter.js');
 const newMemberData = require('./new-member-data.js');
+const findMember = require('./find-member.js');
 
 const commandFiles = fs.readdirSync(__dirname + '/commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -24,6 +25,7 @@ client.on('ready', async() => {
   console.log('Newest Edition');
   messageCount(client);
   newMemberData(client);
+  findMember(client);
   // Catch errors, and close when we're not using it
   // await mongo().then(mongoose => {
   //   try {
@@ -37,11 +39,11 @@ client.on('ready', async() => {
   await mongo();
 });
 
-client.on('guildMemberAdd', (member) => {
-    console.log('User ' + member.user.username + ' has joined the server!');
-    defaultRole = member.guild.roles.cache.find(role => role.name === "Traveller");
-    member.roles.add(defaultRole);
-});
+// client.on('guildMemberAdd', (member) => {
+//     console.log('User ' + member.user.username + ' has joined the server!');
+//     defaultRole = member.guild.roles.cache.find(role => role.name === "Traveller");
+//
+// });
 
 client.on('message', (message) => {
   if (message.author.bot && message.channel.id != 822423063697948693) return;
@@ -70,5 +72,5 @@ client.on('message', (message) => {
   }
 })
 
-client.login(process.env.DJS_TOKEN);
-// client.login('ODIyNDE4MTM2Nzg2NTM0NDMw.YFR-kw.fJyONfdVq_-qWJbocovE1tjewIE');
+// client.login(process.env.DJS_TOKEN);
+client.login('ODIyNDE4MTM2Nzg2NTM0NDMw.YFR-kw.fJyONfdVq_-qWJbocovE1tjewIE');
