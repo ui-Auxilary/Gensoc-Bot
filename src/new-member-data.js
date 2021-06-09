@@ -2,7 +2,7 @@ const mongo = require('./mongo.js');
 const memberDataSchema = require('./schemas/new-member-schema.js');
 
 module.exports = client => {
-  client.on('message', (message) => {
+  client.on('message', async (message) => {
     const { author } = message;
     const { id } = author;
     if (message.channel.id == 822423063697948693) {
@@ -50,7 +50,7 @@ module.exports = client => {
       }
     }
 
-    memberDataSchema.findOneAndUpdate(
+    await memberDataSchema.findOneAndUpdate(
         {
           _id: id,
         },
