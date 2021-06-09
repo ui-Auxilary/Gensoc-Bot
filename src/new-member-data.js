@@ -39,6 +39,7 @@ module.exports = client => {
 
       member = message.guild.members.cache.find(v => v.user.tag == d_id);
       console.log(member.user.id);
+      id = member.user.id;
       const result = memberDataSchema.find({
         _id: member.user.id
       })
@@ -51,10 +52,10 @@ module.exports = client => {
 
     memberDataSchema.findOneAndUpdate(
         {
-          _id: member.user.id,
+          _id: id,
         },
         {
-          _id: member.user.id,
+          _id: id,
           name: name,
           email_or_phone: email_or_phone,
           arc_member: arc_member,
