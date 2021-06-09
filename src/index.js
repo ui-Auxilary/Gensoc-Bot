@@ -72,5 +72,5 @@ client.on('message', (message) => {
   }
 })
 
-// client.login(process.env.DJS_TOKEN);
-client.login('ODIyNDE4MTM2Nzg2NTM0NDMw.YFR-kw.fJyONfdVq_-qWJbocovE1tjewIE');
+client.login(process.env.DJS_TOKEN);
+// client.login('ODIyNDE4MTM2Nzg2NTM0NDMw.YFR-kw.fJyONfdVq_-qWJbocovE1tjewIE');

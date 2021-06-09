@@ -42,7 +42,7 @@ module.exports = client => {
       const result = memberDataSchema.find({
         _id: member.user.id
       })
-      if (result) {
+      if (result.length > 1) {
         member.roles.add(verified_role);
       } else {
         return;
