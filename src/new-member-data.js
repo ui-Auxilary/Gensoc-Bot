@@ -5,6 +5,7 @@ module.exports = client => {
   client.on('message', async (message) => {
     const { author } = message;
     const { id } = author;
+    member = message.guild.members.cache.find(v => v.user.tag == discord_name);
     if (message.channel.id == 822423063697948693) {
       verified_role = message.guild.roles.cache.find(role => role.name === "verified");
       // console.log(verified_role);
