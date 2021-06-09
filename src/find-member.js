@@ -12,7 +12,7 @@ module.exports = client => {
       _id: member.user.id
     })
     console.log(result)
-    if (result.length > 1) {
+    if (result.length > 0) {
       member.roles.add(defaultRole);
     } else {
       console.log("No role added");
