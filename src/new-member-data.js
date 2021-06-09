@@ -35,10 +35,8 @@ module.exports = client => {
 
       d_id = filtered_array[filtered_array.length -1];
       console.log(name, email_or_phone, arc_member, zid, d_id);
-      //Extracts DISCORD_ID from the google form
-      const discord_name = embed.description.split("\n").pop();
 
-      member = message.guild.members.cache.find(v => v.user.tag == discord_name);
+      member = message.guild.members.cache.find(v => v.user.tag == d_id);
       console.log(member.user.id);
       member.roles.add(verified_role);
     }
