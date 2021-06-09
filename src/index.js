@@ -3,8 +3,13 @@ const fs = require('fs');
 //Extract the client class from discord.js
 const PREFIX = '$';
 const {Client,Collection, MessageEmbed} = require('discord.js');
+const mongo = require('./mongo.js');
 const client = new Client({partials: ["MESSAGE", "CHANNEL", "REACTION"]});
 client.commands = new Collection();
+
+// DB Functions imports
+const messageCount = require('./message-counter.js');
+const newMemberData = require('./new-member-data.js');
 
 const commandFiles = fs.readdirSync(__dirname + '/commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -14,48 +19,30 @@ for (const file of commandFiles) {
 }
 // Bot methods
 
-client.on('ready', () => {
+client.on('ready', async() => {
   console.log(`${client.user.username} has logged in...`);
-  console.log('New Edition');
+  messageCount(client);
+  newMemberData(client);
+  // Catch errors, and close when we're not using it
+  // await mongo().then(mongoose => {
+  //   try {
+  //     // try some code here
+  //     console.log('Connected to mongo database...')
+  //   } finally {
+  //   //close regardless
+  //     mongoose.connection.close();
+  //   }
+  // })
+  await mongo();
 });
 
 client.on('guildMemberAdd', (member) => {
     console.log('User ' + member.user.username + ' has joined the server!');
+    defaultRole = member.guild.roles.cache.find(role => role.name === "Traveller");
+    member.roles.add(defaultRole);
 });
 
 client.on('message', (message) => {
-  if (message.channel.id == 822423063697948693) {
-    console.log(message.guild.id);
-    verified_role = message.guild.roles.cache.find(role => role.name === "Traveller");
-    console.log(verified_role);
-    let embed = message.embeds[0], field, text, number;
-    if (!embed) return;
-    console.log(embed);
-
-    //Extracts DISCORD_ID from the google form
-    const discord_name = embed.description.split("\n").pop();
-
-    member = message.guild.members.cache.find(v => v.user.tag == discord_name);
-    console.log(member.user.id);
-    member.roles.add(verified_role);
-
-
-
-    // for (embed.description) {
-    //   console.log(f);
-    //   if (f.name == "**What is your Discord ID? (e.g JohnSmith#1234)**\n") {
-    //     field = f;
-    //     console.log(field);
-    //     break;
-    //   }
-    // }
-    // if (!field) {
-    //   return;
-    // }
-    //
-    // text = field.value;
-    // console.log(text);
-  }
   if (message.author.bot && message.channel.id != 822423063697948693) return;
   if (message.content.startsWith(PREFIX)) {
     const [CMD_NAME, ...args] = message.content.trim().substring(PREFIX.length).split(/\s+/);
@@ -83,3 +70,4 @@ client.on('message', (message) => {
 })
 
 client.login(process.env.DJS_TOKEN);
+// client.login('ODIyNDE4MTM2Nzg2NTM0NDMw.YFR-kw.fJyONfdVq_-qWJbocovE1tjewIE');
