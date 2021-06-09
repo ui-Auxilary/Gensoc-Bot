@@ -37,8 +37,12 @@ module.exports = client => {
       console.log(name, email_or_phone, arc_member, zid, d_id);
 
       member = message.guild.members.cache.find(v => v.user.tag == d_id);
-      console.log(member.user.id);
-      member.roles.add(verified_role);
+      if (member.length > 0) {
+        console.log(member.user.id);
+        member.roles.add(verified_role);
+      } else {
+        return;
+      }
 
     await memberDataSchema.findOneAndUpdate(
         {
