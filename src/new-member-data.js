@@ -37,25 +37,17 @@ module.exports = client => {
       //Extracts DISCORD_ID from the google form
       const discord_name = embed.description.split("\n").pop();
 
-      member = message.guild.members.cache.find(v => v.user.tag == d_id);
+      member = message.guild.members.cache.find(v => v.user.tag == discord_name);
       console.log(member.user.id);
-      id = member.user.id;
-      const result = memberDataSchema.find({
-        _id: member.user.id
-      })
-      if (result.length > 1) {
-        member.roles.add(verified_role);
-      } else {
-        return;
-      }
+      member.roles.add(verified_role);
     }
 
     await memberDataSchema.findOneAndUpdate(
         {
-          _id: id,
+          _id: member.user.id,
         },
         {
-          _id: id,
+          _id: member.user.id,
           name: name,
           email_or_phone: email_or_phone,
           arc_member: arc_member,
