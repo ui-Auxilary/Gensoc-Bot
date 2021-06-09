@@ -6,7 +6,7 @@ module.exports = client => {
     const { author } = message;
     const { id } = author;
     if (message.channel.id == 822423063697948693) {
-      verified_role = message.guild.roles.cache.find(role => role.name === "verified");
+      verified_role = message.guild.roles.cache.find(role => role.name === "Traveller");
       // console.log(verified_role);
       let embed = message.embeds[0], field, text, number;
       if (!embed) return;

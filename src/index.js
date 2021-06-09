@@ -21,6 +21,7 @@ for (const file of commandFiles) {
 
 client.on('ready', async() => {
   console.log(`${client.user.username} has logged in...`);
+  console.log('Newest Edition');
   messageCount(client);
   newMemberData(client);
   // Catch errors, and close when we're not using it
