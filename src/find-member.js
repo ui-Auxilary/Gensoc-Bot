@@ -1,6 +1,7 @@
 const mongo = require('./mongo');
 const memberDataSchema = require('./schemas/new-member-schema.js');
 
+//Newest changes
 module.exports = client => {
   client.on('guildMemberAdd', async (member) => {
     console.log("Activating");
