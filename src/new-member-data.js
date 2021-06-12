@@ -33,12 +33,30 @@ module.exports = client => {
         }
       }
 
-      d_id = filtered_array[filtered_array.length -1];
-      console.log(name, email_or_phone, arc_member, zid, d_id);
+      discord_id = filtered_array[filtered_array.length -1];
+      console.log(name, email_or_phone, arc_member, zid, discord_id);
 
-      member = message.guild.members.cache.find(v => v.user.tag == d_id);
+      member = message.guild.members.cache.find(v => v.user.tag == discord_id);
       if (member) {
         member.roles.add(verified_role);
+      } else if (discord_id) {
+
+        await memberDataSchema.findOneAndUpdate(
+            {
+              discord_id: discord_id,
+            },
+            {
+              name: name,
+              email_or_phone: email_or_phone,
+              arc_member: arc_member,
+              zid: zid,
+              discord_id: discord_id,
+            },
+            {   // If it does exist update, if it doesn't create it
+              upsert: true,
+            }
+          ).exec()
+          return;
       } else {
         return;
       }
@@ -46,6 +64,8 @@ module.exports = client => {
     await memberDataSchema.findOneAndUpdate(
         {
           _id: member.user.id,
+          email_or_phone: email_or_phone,
+          discord_id: discord_id,
         },
         {
           _id: member.user.id,
@@ -53,7 +73,7 @@ module.exports = client => {
           email_or_phone: email_or_phone,
           arc_member: arc_member,
           zid: zid,
-          discord_id: d_id,
+          discord_id: discord_id,
         },
         {   // If it does exist update, if it doesn't create it
           upsert: true,

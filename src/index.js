@@ -24,18 +24,8 @@ client.on('ready', async() => {
   console.log(`${client.user.username} has logged in...`);
   console.log('Newest Edition');
   messageCount(client);
-  newMemberData(client);
   findMember(client);
-  // Catch errors, and close when we're not using it
-  // await mongo().then(mongoose => {
-  //   try {
-  //     // try some code here
-  //     console.log('Connected to mongo database...')
-  //   } finally {
-  //   //close regardless
-  //     mongoose.connection.close();
-  //   }
-  // })
+  newMemberData(client);
   await mongo();
 });
 

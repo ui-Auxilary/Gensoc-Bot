@@ -9,14 +9,26 @@ module.exports = client => {
     defaultRole = member.guild.roles.cache.find(role => role.name === "Traveller");
     console.log(member.user.id);
     const result = await memberDataSchema.find({
-      _id: member.user.id
+      discord_id: member.user.tag,
     })
     console.log(result)
     if (result.length > 0) {
-      member.roles.add(defaultRole);
+      await memberDataSchema.findOneAndUpdate(
+          {
+            discord_id: member.user.tag,
+          },
+          {
+            id: member.user.id,
+          },
+          {   // If it does exist update, if it doesn't create it
+            upsert: true,
+          }
+        ).exec()
+        member.roles.add(defaultRole);
+        return;
     } else {
       console.log("No role added");
-      return;
-    }
+        return;
+      }
   });
 }
