@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const mongoPath = "HIDDEN"
+const mongoPath = process.env.DB_PATH
 module.exports = async () => {
   await mongoose.connect(mongoPath, {
     keepAlive: true,
